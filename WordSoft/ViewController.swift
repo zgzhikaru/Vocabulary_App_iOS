@@ -33,7 +33,7 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         super.viewDidLoad()
         tableView.dataSource = self
         searchBar.delegate = self
-        if let rawData: [String] = wordGenerator.loadData(fileName: "wordList.txt") {
+        if let rawData: [String] = wordGenerator.loadData(fileName: "wordList3.txt") {
             let result = wordGenerator.handleData(inputList: rawData)
         
             data = result.uniqueWords

@@ -22,9 +22,11 @@ class wordGenerator{
     var numSampled: Int = 0
     var navOffset: Int = 0
     
+    let wordfilename: String = "wordList3.txt"
 
     init() {
-        if let inputList = wordGenerator.loadData(fileName: "wordList.txt") {
+        
+        if let inputList = wordGenerator.loadData(fileName: wordfilename) {
             numRawWords = inputList.count
             let result = wordGenerator.handleData(inputList: inputList)
             wordList = result.uniqueWords
@@ -40,21 +42,23 @@ class wordGenerator{
         //wordList = ["word1", "word2", "word3", "word4", "word5"]
         //indexSet = Set<Int>(0...wordList.count-1)
         indexSet = Set<Int>(indexMap.values)
-        let indexList = defaults.object(forKey: "indexSet") as? [Int] ?? [Int]()
-        //print("IndexList: ")
-        if !indexList.isEmpty {
+        //var indexList = [Int]()
+        if defaults.object(forKey: "indexSet" + wordfilename) != nil {
+            let indexList = defaults.object(forKey: "indexSet" + wordfilename) as! [Int]
             indexSet = Set(indexList)
         }
-        freqList = defaults.object(forKey: "freqList") as? [Int] ?? frequencies
+        //let indexList = defaults.object(forKey: "indexSet" + wordfilename) as? [Int] ?? [Int]()
+        //print("IndexSet: ")
+        //print(indexSet)
+        //indexSet = Set(indexList)
         
-        lastSampledIndex = defaults.integer(forKey: "lastSampledIndex")
-        history = defaults.object(forKey: "history") as? [Int] ?? [Int]()
-        numSampled = defaults.integer(forKey: "numSampled")
-        navOffset = defaults.integer(forKey: "navOffset")
+        freqList = defaults.object(forKey: "freqList" + wordfilename) as? [Int] ?? frequencies
+        
+        lastSampledIndex = defaults.integer(forKey: "lastSampledIndex" + wordfilename)
+        history = defaults.object(forKey: "history" + wordfilename) as? [Int] ?? [Int]()
+        numSampled = defaults.integer(forKey: "numSampled" + wordfilename)
+        navOffset = defaults.integer(forKey: "navOffset" + wordfilename)
 
-        // Maintaining: Test freqList flaws
-        //fixFreqList()
-        //assert(!freqListIsFlaw())
     }
     
     static func loadData(fileName: String) -> [String]? {
@@ -140,20 +144,6 @@ class wordGenerator{
         print("true remaing tests")
         print(numRawWords - numSampled)*/
         
-        /*
-        for i in history {
-            //print(freqList[i-1] + caseTesed[i-1])
-            //print(frequencies[i-1])
-            if freqList[i-1] + caseTesed[i-1] < frequencies[i-1] {
-                print("some word will be tested less than supposed amount:")
-                print(wordList[i-1])
-                print(freqList[i-1])
-                print(caseTesed[i-1])
-                print(frequencies[i-1])
-                return true
-            }
-        }
-         */
         
         for wordID in indexSet {
             if !(freqList[wordID-1] > 0) {
@@ -167,231 +157,19 @@ class wordGenerator{
         return numRawWords - numSampled != remainingWordNum
     }
     
-    func fixFreqList() {
-        
-        numSampled = 2200
-        
-        freqList = Array(repeating: 0, count: wordList.count)
-        // Re add every thing that must reappear
-        print("indexset size")
-        print(indexSet.count)
-        for i in indexSet {
-            
-            if i < 1 || i > freqList.count {
-                indexSet.remove(i)
-                print("removed illegal index from indexSet")
-                print(i)
-                break
-            }
-            if freqList[i-1] == 0 {
-                freqList[i-1] += 1
-            }
-        }
-        
-        print("First stage fix")
-        print(freqListIsFlaw())
-        
-
-        let remainingTest: Int = numRawWords - numSampled - indexSet.count
-        print("remainingTest")
-        print(remainingTest)
-        
-        var j = 0
-        var last_j = j
-        for _ in 1...remainingTest {
-            while !(freqList[j] < frequencies[j]) {
-                j += 1
-                if j >= freqList.count {
-                    j = 0
-                }
-                if j == last_j {
-                    print("cannot balance")
-                    break
-                }
-                
-            }
-            last_j = j
-            freqList[j] += 1
-                
-        }
-        let sum = freqList.reduce(0, +)
-        print(sum)
-        print(remainingTest)
-        assert(sum == numRawWords - numSampled)
-        return
-        
-        /*
-        // Assume every time user hit pass button
-        print("Reducing tested words from list")
-        for i in history {
-            //caseTesed[i-1] += 1
-            if freqList[i-1] > 0 {
-                freqList[i-1] -= 1
-            }
-        }
-        
-        print("Second stage fix")
-        print(freqListIsFlaw())
-        
-
-        var caseTesed = Array(repeating: 0, count: wordList.count)
-        for i in history {
-            caseTesed[i-1] += 1
-        }
-        
-        // Re add every thing that must reappear
-        print("indexset size")
-        print(indexSet.count)
-        for i in indexSet {
-            
-            if i < 1 || i > freqList.count {
-                indexSet.remove(i)
-                print("removed illegal index from indexSet")
-                print(i)
-                break
-            }
-            if freqList[i-1] == 0 {
-                freqList[i-1] += 1
-            }
-        }
-        
-        print("First stage fix")
-        print(freqListIsFlaw())
-        
-        
-
-        
-        
-        
-        var totalReduce:Int = 0
-        for i in 1...freqList.count {
-            if freqList[i-1] > frequencies[i-1] {
-                let amt = freqList[i-1] - frequencies[i-1]
-                totalReduce += amt
-                
-                freqList[i-1] = frequencies[i-1]
-                
-            }
-        }
-        print("Third stage fix")
-        print("totalReduce")
-        print(totalReduce)
-        
-        print(freqListIsFlaw())
-        
-       
-        
-        
-        let remainingWordNum = freqList.reduce(0, +)
-        print("remainingWordNum")
-        print(remainingWordNum)
-        
-        // Evenly readd missing samples to ensure total tests number compatible
-        let remainingTest = numRawWords - numSampled
-        print("remainingTest")
-        print(remainingTest)
-
-        if remainingWordNum > remainingTest {
-            numSampled = numRawWords - remainingWordNum
-            
-            print("adjust test amount")
-            //print(freqListIsFlaw())
-                   
-            //print("saving fix change")
-            //saveProgress()
-        }
-        else if remainingWordNum != remainingTest {
-            assert(remainingWordNum < remainingTest)
-           
-            let diff: Int = remainingTest - remainingWordNum
-            print("diff")
-            print(diff)
-            
-            var j = 0
-            var last_j = j
-            for _ in 1...diff {
-                while !(freqList[j] < frequencies[j]) {
-                    j += 1
-                    if j >= freqList.count {
-                        j = 0
-                    }
-                    if j == last_j {
-                        print("cannot balance")
-                        break
-                    }
-                    
-                }
-                last_j = j
-                freqList[j] += 1
-                    
-            }
-            assert(freqList.reduce(0, +) == remainingTest)
-        }
-        
-        print("Fourth stage fix")
-        print(freqListIsFlaw())
-        
-        // Get available spaces
-        var totalAmt = 0
-        for i in history {
-            //print(freqList[i-1] + caseTesed[i-1])
-            //print(frequencies[i-1])
-            if freqList[i-1] + caseTesed[i-1] < frequencies[i-1] {
-                let amt = frequencies[i-1] - (freqList[i-1] + caseTesed[i-1])
-                assert(amt > 0)
-                assert(freqList[i-1] >= 0)
-                freqList[i-1] += amt
-                totalAmt += amt
-            }
-        }
-        print("totalAmt")
-        print(totalAmt)
-        
-        var j = 0
-        var last_j = j
-        for _ in 1...totalAmt {
-            while !(freqList[j] + caseTesed[j] > frequencies[j] && !(freqList[j] == 1 && indexSet.contains(j))) {
-                j += 1
-                if j >= freqList.count {
-                    j = 0
-                }
-                if j == last_j {
-                    print("cannot balance total amt")
-                    break
-                }
-            }
-            last_j = j
-            if freqList[j] > 0 {
-                freqList[j] -= 1
-            }
-            assert(freqList[j] >= 0)
-        }
-        
-        print("Fix stage 5: rebalancing ")
-        //numSampled = numRawWords - freqList.reduce(0, +)
-        print("fix complete")
-        
-        print(freqListIsFlaw())
-        //print(freqList)
-        print("saving fix")
-        saveProgress()
-        */
-        
-    }
-    
     func saveProgress() {
         //print("In saveProgress")
         let defaults = UserDefaults.standard
-        defaults.set(Array(indexSet), forKey: "indexSet")
+        defaults.set(Array(indexSet), forKey: "indexSet" + wordfilename)
 
-        defaults.set(Array(freqList), forKey: "freqList")
+        defaults.set(Array(freqList), forKey: "freqList" + wordfilename)
         
-        defaults.set(lastSampledIndex, forKey: "lastSampledIndex")
+        defaults.set(lastSampledIndex, forKey: "lastSampledIndex" + wordfilename)
         //print(lastSampledIndex)
         //print(history)
-        defaults.set(history, forKey: "history")
-        defaults.set(numSampled, forKey: "numSampled")
-        defaults.set(navOffset, forKey: "navOffset")
+        defaults.set(history, forKey: "history" + wordfilename)
+        defaults.set(numSampled, forKey: "numSampled" + wordfilename)
+        defaults.set(navOffset, forKey: "navOffset" + wordfilename)
     }
 
     
@@ -409,6 +187,7 @@ class wordGenerator{
             //print("Sampling new staff")
             // Get a random index and remove it from list
             lastSampledIndex = indexSet.randomElement()!
+            //print(lastSampledIndex)
             if lastSampledIndex > 0 && lastSampledIndex <= wordList.count {
                 navOffset = 0
                 
@@ -424,6 +203,8 @@ class wordGenerator{
             }
         }
         else {  // Handle out-of-sample: Repeat giving the last sample
+            //print("getting last sample")
+            //print(lastSampledIndex)
             if lastSampledIndex > 0 && lastSampledIndex <= wordList.count {
                 // No more sample in source, return the last sampled element.
                 navOffset = 0

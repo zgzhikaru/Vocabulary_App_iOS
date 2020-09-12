@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E70F3EEA24DB692000A0B337 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70F3EE924DB692000A0B337 /* HistoryViewController.swift */; };
 		E7313D6F24CFDF210048B56C /* wordGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7313D6E24CFDF210048B56C /* wordGenerator.swift */; };
+		E744402424F864F900453837 /* wordList3.txt in Resources */ = {isa = PBXBuildFile; fileRef = E744402324F864F900453837 /* wordList3.txt */; };
 		E751DBA424CFCB0E008AA881 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E751DBA324CFCB0E008AA881 /* AppDelegate.swift */; };
 		E751DBA624CFCB0E008AA881 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E751DBA524CFCB0E008AA881 /* SceneDelegate.swift */; };
 		E751DBA824CFCB0E008AA881 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E751DBA724CFCB0E008AA881 /* FirstViewController.swift */; };
@@ -19,6 +20,7 @@
 		E76A61AB24E4970900F1FF22 /* wordList.txt in Resources */ = {isa = PBXBuildFile; fileRef = E76A61AA24E4970900F1FF22 /* wordList.txt */; };
 		E76A61AF24E497CE00F1FF22 /* example.txt in Resources */ = {isa = PBXBuildFile; fileRef = E76A61AE24E497CE00F1FF22 /* example.txt */; };
 		E79EFAD224EDD5BD00A4DA5B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79EFAD124EDD5BD00A4DA5B /* ViewController.swift */; };
+		E7CC037F24F61E47001EE13C /* wordList2.txt in Resources */ = {isa = PBXBuildFile; fileRef = E7CC037E24F61E46001EE13C /* wordList2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,7 @@
 /* Begin PBXFileReference section */
 		E70F3EE924DB692000A0B337 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		E7313D6E24CFDF210048B56C /* wordGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wordGenerator.swift; sourceTree = "<group>"; };
+		E744402324F864F900453837 /* wordList3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wordList3.txt; sourceTree = "<group>"; };
 		E751DBA024CFCB0E008AA881 /* GRE Words.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GRE Words.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E751DBA324CFCB0E008AA881 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E751DBA524CFCB0E008AA881 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +51,7 @@
 		E76A61AA24E4970900F1FF22 /* wordList.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wordList.txt; sourceTree = "<group>"; };
 		E76A61AE24E497CE00F1FF22 /* example.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = example.txt; sourceTree = "<group>"; };
 		E79EFAD124EDD5BD00A4DA5B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E7CC037E24F61E46001EE13C /* wordList2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = wordList2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,8 @@
 			children = (
 				E76A61AE24E497CE00F1FF22 /* example.txt */,
 				E76A61AA24E4970900F1FF22 /* wordList.txt */,
+				E7CC037E24F61E46001EE13C /* wordList2.txt */,
+				E744402324F864F900453837 /* wordList3.txt */,
 				E751DBA324CFCB0E008AA881 /* AppDelegate.swift */,
 				E751DBA524CFCB0E008AA881 /* SceneDelegate.swift */,
 				E751DBA724CFCB0E008AA881 /* FirstViewController.swift */,
@@ -196,10 +202,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E751DBB224CFCB0F008AA881 /* LaunchScreen.storyboard in Resources */,
+				E744402424F864F900453837 /* wordList3.txt in Resources */,
 				E751DBAF24CFCB0F008AA881 /* Assets.xcassets in Resources */,
 				E76A61AF24E497CE00F1FF22 /* example.txt in Resources */,
 				E76A61AB24E4970900F1FF22 /* wordList.txt in Resources */,
 				E751DBAD24CFCB0E008AA881 /* Main.storyboard in Resources */,
+				E7CC037F24F61E47001EE13C /* wordList2.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
